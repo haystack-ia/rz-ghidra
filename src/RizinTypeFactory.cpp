@@ -121,11 +121,7 @@ Datatype *RizinTypeFactory::queryRizin(const string &n, std::set<std::string> &s
 	RzCoreLock core(arch->getCore());
 	RzBaseType *type = rz_type_db_get_base_type(core->analysis->typedb, n.c_str());
 	if(!type || !type->name)
-	{
-		if(type)
-			rz_type_base_type_free(type);
 		goto beach;
-	}
 	switch(type->kind)
 	{
 		case RZ_BASE_TYPE_KIND_STRUCT:
@@ -141,7 +137,6 @@ Datatype *RizinTypeFactory::queryRizin(const string &n, std::set<std::string> &s
 		default:
 			break;
 	}
-	rz_type_base_type_free(type);
 beach:
 	stack_types.erase(n);
 	return r;
